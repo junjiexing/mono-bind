@@ -33,6 +33,14 @@ namespace MonoBind
 		MonoClass* getClass() const;
 
 		MonoDomain* getDomain() const;
+
+		//template<typename ...ArgsT>
+		//ObjectPtr invoke(const char* name, ArgsT... args)
+		//{
+
+		//}
+
+		ObjectPtr invoke(const char* name);
 	private:
 		Object(MonoObject* object)
 			:m_object(object),

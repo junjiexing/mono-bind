@@ -11,7 +11,8 @@ namespace MonoBind
 			:m_method(method)
 		{}
 
-		ObjectPtr invoke(const ObjectPtr& obj);
+		ObjectPtr invoke(const ObjectPtr& obj, void** params = nullptr, MonoObject** exec = nullptr);
+		ObjectPtr invoke(MonoObject* obj, void** params = nullptr, MonoObject** exec = nullptr);
 	private:
 		MonoMethod* m_method;
 	};

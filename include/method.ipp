@@ -2,8 +2,14 @@
 
 namespace MonoBind
 {
-	ObjectPtr Method::invoke(const ObjectPtr& obj)
+	ObjectPtr Method::invoke(const ObjectPtr& obj, void** params, MonoObject** exec)
 	{
-		return Object::attachObject(mono_runtime_invoke(m_method, obj->raw(), nullptr, nullptr));
+		return invoke(obj->raw());
 	}
+
+	ObjectPtr Method::invoke(MonoObject* obj, void** params, MonoObject** exec)
+	{
+		return Object::attachObject(mono_runtime_invoke(m_method, obj, params, exec));
+	}
+
 }

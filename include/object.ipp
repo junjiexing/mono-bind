@@ -18,4 +18,10 @@ namespace MonoBind
 		return mono_object_get_domain(m_object);
 	}
 
+	ObjectPtr Object::invoke(const char* name)
+	{
+		Class klass = getClass();
+		Method method = klass.getMethod(name);
+		return method.invoke(m_object);
+	}
 }
