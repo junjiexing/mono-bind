@@ -12,13 +12,13 @@
     <ClCompile>
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>MONO_VERSION=3002003;MONO_PATH_STR=R"_($(MONO_PATH))_"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(MONO_PATH)\include\mono-2.0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MONO_PATH)\include\mono-2.0;$(SolutionDir)include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(MONO_PATH)\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>libmonosgen-2.0.dll.a</AdditionalDependencies>
-	  <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

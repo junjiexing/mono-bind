@@ -162,6 +162,21 @@
       <Project>{ae6a1d34-8b17-44fd-bc7a-77da43b6e8a6}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\assembly.hpp" />
+    <ClInclude Include="..\..\..\include\assembly.ipp" />
+    <ClInclude Include="..\..\..\include\class.hpp" />
+    <ClInclude Include="..\..\..\include\class.ipp" />
+    <ClInclude Include="..\..\..\include\domain.hpp" />
+    <ClInclude Include="..\..\..\include\domain.ipp" />
+    <ClInclude Include="..\..\..\include\image.hpp" />
+    <ClInclude Include="..\..\..\include\image.ipp" />
+    <ClInclude Include="..\..\..\include\method.hpp" />
+    <ClInclude Include="..\..\..\include\method.ipp" />
+    <ClInclude Include="..\..\..\include\mono-bind.hpp" />
+    <ClInclude Include="..\..\..\include\object.hpp" />
+    <ClInclude Include="..\..\..\include\object.ipp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
