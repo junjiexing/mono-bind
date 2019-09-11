@@ -4,7 +4,7 @@ namespace MonoBind
 {
 	ObjectPtr Method::invoke(const ObjectPtr& obj, void** params, MonoObject** exec)
 	{
-		return invoke(obj->raw());
+		return invoke(obj->Raw());
 	}
 
 	ObjectPtr Method::invoke(MonoObject* obj, void** params, MonoObject** exec)

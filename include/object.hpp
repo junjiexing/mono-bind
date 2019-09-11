@@ -2,6 +2,7 @@
 
 #include <mono/metadata/object.h>
 #include <tchar.h>
+#include <string>
 
 namespace MonoBind
 {
@@ -29,7 +30,7 @@ namespace MonoBind
 			return ObjectPtr(new Object(object));
 		}
 
-		MonoObject* raw() const;
+		MonoObject* Raw() const;
 
 		MonoClass* getClass() const;
 
@@ -39,6 +40,14 @@ namespace MonoBind
 		ObjectPtr invoke(const char* name, ArgsT& ... args);
 
 		ObjectPtr invoke(const char* name);
+
+		template<typename T>
+		T to()
+		{
+			return *reinterpret_cast<T*>(mono_object_unbox(m_object));
+		}
+
+		// TODO: ¶Ôto stringÌØ»¯
 
 	private:
 		MonoString* convertArg(const char* str)

@@ -13,7 +13,7 @@ namespace MonoBind
 
 		Assembly openAssembly(const char* name);
 
-		MonoDomain* raw();
+		MonoDomain* Raw();
 
 		~Domain()
 		{

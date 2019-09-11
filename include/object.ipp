@@ -3,7 +3,7 @@
 namespace MonoBind
 {
 
-	MonoObject* Object::raw() const
+	MonoObject* Object::Raw() const
 	{
 		return m_object;
 	}

@@ -7,7 +7,7 @@ namespace MonoBind
 		return std::shared_ptr<Domain>(new Domain(mono_jit_init(file)));
 	}
 
-	inline MonoDomain* Domain::raw()
+	inline MonoDomain* Domain::Raw()
 	{
 		return m_domain;
 	}
