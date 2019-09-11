@@ -1,6 +1,7 @@
 #pragma once
 
 #include <mono/metadata/object.h>
+#include <tchar.h>
 
 namespace MonoBind
 {
@@ -34,13 +35,44 @@ namespace MonoBind
 
 		MonoDomain* getDomain() const;
 
-		//template<typename ...ArgsT>
-		//ObjectPtr invoke(const char* name, ArgsT... args)
-		//{
-
-		//}
+		template<typename ...ArgsT>
+		ObjectPtr invoke(const char* name, ArgsT& ... args);
 
 		ObjectPtr invoke(const char* name);
+
+	private:
+		MonoString* convertArg(const char* str)
+		{
+			return mono_string_new(getDomain(), str);
+		}
+
+		MonoString* convertArg(const std::string& str)
+		{
+			return mono_string_new_len(getDomain(), str.data(), str.size());
+		}
+
+		MonoString* convertArg(const wchar_t* str)
+		{
+			return mono_string_new_utf16(getDomain(), reinterpret_cast<const mono_unichar2*>(str), wcslen(str));
+		}
+
+		MonoString* convertArg(const std::wstring& str)
+		{
+			return mono_string_new_utf16(getDomain(), reinterpret_cast<const mono_unichar2*>(str.data()), str.size());
+		}
+
+		template<typename T>
+		T* convertArg(T& arg)
+		{
+			return &arg;
+		}
+
+		template<typename T>
+		T* convertArg(T* arg)
+		{
+			return arg;
+		}
+
 	private:
 		Object(MonoObject* object)
 			:m_object(object),

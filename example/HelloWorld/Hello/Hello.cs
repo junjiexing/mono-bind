@@ -4,9 +4,9 @@ namespace Example
 {
     public class Hello
     {
-        public void SayHello()
+        public void SayHello(string str)
         {
-            Console.WriteLine("Hello world from libmono!");
+            Console.WriteLine($"Hello world from {str}!");
         }
     }
 }

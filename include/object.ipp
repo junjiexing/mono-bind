@@ -18,10 +18,20 @@ namespace MonoBind
 		return mono_object_get_domain(m_object);
 	}
 
-	ObjectPtr Object::invoke(const char* name)
+ 	ObjectPtr Object::invoke(const char* name)
+ 	{
+ 		Class klass = getClass();
+ 		Method method = klass.getMethod(name);
+ 		return method.invoke(m_object);
+ 	}
+
+	template<typename ...ArgsT>
+	ObjectPtr Object::invoke(const char* name, ArgsT& ... args)
 	{
+		void* monoArgs[] = { convertArg(args)... };
 		Class klass = getClass();
 		Method method = klass.getMethod(name);
-		return method.invoke(m_object);
+		return method.invoke(m_object, monoArgs);
 	}
+
 }
