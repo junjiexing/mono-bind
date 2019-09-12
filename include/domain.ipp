@@ -1,13 +1,28 @@
 #pragma once
+#include <cassert>
 
 namespace MonoBind
 {
-	DomainPtr Domain::initJit(const char* file)
+
+	MonoBind::Domain& Domain::get()
 	{
-		return std::shared_ptr<Domain>(new Domain(mono_jit_init(file)));
+		static Domain domain;
+		return domain;
 	}
 
-	inline MonoDomain* Domain::Raw()
+	void Domain::initJit(const char* file)
+	{
+		assert(m_domain == nullptr);
+		m_domain = mono_jit_init(file);
+	}
+
+	void Domain::initJit(const char* file, const char* ver)
+	{
+		assert(m_domain == nullptr);
+		m_domain = mono_jit_init_version(file, ver);
+	}
+
+	inline MonoDomain* Domain::raw()
 	{
 		return m_domain;
 	}

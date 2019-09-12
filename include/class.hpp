@@ -13,9 +13,9 @@ namespace MonoBind
 			:m_class(klass)
 		{}
 
-		MonoClass* Raw() { return m_class; };
+		MonoClass* raw() { return m_class; };
 
-		ObjectPtr New(DomainPtr domain);
+		ObjectPtr New();
 
 		Method getMethod(const char* name)
 		{

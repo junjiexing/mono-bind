@@ -3,7 +3,7 @@
 namespace MonoBind
 {
 
-	MonoObject* Object::Raw() const
+	MonoObject* Object::raw() const
 	{
 		return m_object;
 	}
@@ -25,8 +25,17 @@ namespace MonoBind
  		return method.invoke(m_object);
  	}
 
+// 	template<typename ...ArgsT>
+// 	ObjectPtr Object::invoke(const char* name, ArgsT& ... args)
+// 	{
+// 		void* monoArgs[] = { convertArg(args)... };
+// 		Class klass = getClass();
+// 		Method method = klass.getMethod(name);
+// 		return method.invoke(m_object, monoArgs);
+// 	}
+
 	template<typename ...ArgsT>
-	ObjectPtr Object::invoke(const char* name, ArgsT& ... args)
+	ObjectPtr Object::invoke(const char* name, ArgsT... args)
 	{
 		void* monoArgs[] = { convertArg(args)... };
 		Class klass = getClass();

@@ -6,10 +6,10 @@
 
 int main()
 {
-	MonoBind::init(MONO_PATH_STR "\\lib\\mono\\4.5");
-	auto domain = MonoBind::Domain::initJit("HelloHost.exe");
-	auto klass = domain->openAssembly("Hello.dll").getImage().classFromName("Example", "Hello");
-	auto obj = klass.New(domain);
+	MonoBind::initPath(MONO_PATH_STR "\\lib\\mono\\4.5");
+	MonoBind::Domain::get().initJit("HelloHost.exe");
+	auto klass = MonoBind::Domain::get().openAssembly("Hello.dll").getImage().classFromName("Example", "Hello");
+	auto obj = klass.New();
 	obj->invoke("SayHello", "libmono");
 
 	return 0;

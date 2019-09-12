@@ -3,6 +3,7 @@
 #include <mono/metadata/object.h>
 #include <tchar.h>
 #include <string>
+#include <type_traits>
 
 namespace MonoBind
 {
@@ -30,24 +31,37 @@ namespace MonoBind
 			return ObjectPtr(new Object(object));
 		}
 
-		MonoObject* Raw() const;
+		MonoObject* raw() const;
 
 		MonoClass* getClass() const;
 
 		MonoDomain* getDomain() const;
 
+// 		template<typename ...ArgsT>
+// 		ObjectPtr invoke(const char* name, ArgsT& ... args);
+
+		//TODO: ref & out
+
 		template<typename ...ArgsT>
-		ObjectPtr invoke(const char* name, ArgsT& ... args);
+		ObjectPtr invoke(const char* name, ArgsT ... args);
 
 		ObjectPtr invoke(const char* name);
 
 		template<typename T>
-		T to()
+		typename std::enable_if<!std::is_same<T, std::string>::value, T>::type to()
 		{
-			return *reinterpret_cast<T*>(mono_object_unbox(m_object));
+			auto ret = reinterpret_cast<T*>(mono_object_unbox(m_object));
+			return *ret;
 		}
 
-		// TODO: ¶Ôto stringÌØ»¯
+		template<typename T>
+		typename std::enable_if<std::is_same<T, std::string>::value, T>::type to()
+		{
+			auto cStr = mono_string_to_utf8(reinterpret_cast<MonoString*>(m_object));
+			std::string str(cStr);
+			mono_free(cStr);
+			return str;
+		}
 
 	private:
 		MonoString* convertArg(const char* str)

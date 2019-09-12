@@ -9,22 +9,33 @@ namespace MonoBind
 	class Domain
 	{
 	public:
-		static DomainPtr initJit(const char* file);
+		static Domain& get();
+
+		void initJit(const char* file);
+		void initJit(const char* file, const char* ver);
 
 		Assembly openAssembly(const char* name);
 
-		MonoDomain* Raw();
+		MonoDomain* raw();
+
+		void cleanup()
+		{
+			if (m_domain)
+			{
+				mono_jit_cleanup(m_domain);
+				m_domain = nullptr;
+			}
+
+		}
 
 		~Domain()
 		{
-			mono_jit_cleanup(m_domain);
+			cleanup();
 		}
 	private:
-		Domain() = delete;
-		Domain(MonoDomain* domain) : m_domain(domain) {}
+		Domain() = default;
 		Domain(const Domain&) = delete;
  		Domain& operator=(const Domain&) = delete;
- 		//TODO: Ö§³Ömove ctor£¿ 
  		Domain(Domain&&) = delete;
  		Domain& operator=(Domain&&) = delete;
 

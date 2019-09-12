@@ -12,9 +12,15 @@ namespace MonoBind
 	using DomainWeakPtr = std::weak_ptr<Domain>;
 
 
-	inline void init(const char* assembliesPath, const char* configFileName = nullptr)
+	inline void initPath(const char* assembliesPath, const char* configFileName = nullptr)
 	{
 		mono_set_assemblies_path(assembliesPath);
+		mono_config_parse(configFileName);
+	}
+
+	inline void initDir(const char* assemblyDir, const char* configDir, const char* configFileName = nullptr)
+	{
+		mono_set_dirs(assemblyDir, configDir);
 		mono_config_parse(configFileName);
 	}
 

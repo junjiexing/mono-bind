@@ -3,9 +3,9 @@
 
 namespace MonoBind
 {
-	ObjectPtr Class::New(DomainPtr domain)
+	ObjectPtr Class::New()
 	{
-		return Object::createObject(domain->Raw(), m_class);
+		return Object::createObject(Domain::get().raw(), m_class);
 	}
 
 
