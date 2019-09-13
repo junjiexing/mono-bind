@@ -1,0 +1,2 @@
+/Users/xingjunjie/Project/cpp/mono-bind/test/TestLib/obj/Debug/TestLib.csprojAssemblyReference.cache
+/Users/xingjunjie/Project/cpp/mono-bind/test/TestLib/obj/Debug/TestLib.csproj.CoreCompileInputs.cache

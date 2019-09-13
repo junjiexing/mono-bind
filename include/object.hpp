@@ -1,7 +1,7 @@
 #pragma once
 
 #include <mono/metadata/object.h>
-#include <tchar.h>
+#include <wchar.h>
 #include <string>
 #include <type_traits>
 

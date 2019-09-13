@@ -1,0 +1,2 @@
+/Users/xingjunjie/Project/cpp/mono-bind/example/HelloWorld/Hello/obj/Debug/Hello.csprojAssemblyReference.cache
+/Users/xingjunjie/Project/cpp/mono-bind/example/HelloWorld/Hello/obj/Debug/Hello.csproj.CoreCompileInputs.cache

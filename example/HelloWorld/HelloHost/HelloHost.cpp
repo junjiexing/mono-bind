@@ -6,7 +6,7 @@
 
 int main()
 {
-	MonoBind::initPath(MONO_PATH_STR "\\lib\\mono\\4.5");
+	MonoBind::initPath(MONO_PATH_STR "/lib/mono/4.5");
 	MonoBind::Domain::get().initJit("HelloHost.exe");
 	auto klass = MonoBind::Domain::get().openAssembly("Hello.dll").getImage().classFromName("Example", "Hello");
 	auto obj = klass.New();

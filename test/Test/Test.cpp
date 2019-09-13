@@ -8,9 +8,9 @@ struct TestIniter
 	TestIniter()
 	{
 		MonoBind::initDir(
-			MONO_PATH_STR "\\lib",
-			MONO_PATH_STR "\\etc",
-			MONO_PATH_STR "\\etc\\mono\\4.5\\machine.config");
+			MONO_PATH_STR "/lib",
+			MONO_PATH_STR "/etc",
+			MONO_PATH_STR "/etc/mono/4.5/machine.config");
 	}
 } test_init_instance;
 
