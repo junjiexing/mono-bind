@@ -8,7 +8,7 @@ namespace MonoBind
 	class Assembly
 	{
 	public:
-		Assembly(MonoAssembly* assembly)
+		explicit Assembly(MonoAssembly* assembly)
 			:m_assembly(assembly)
 		{}
 

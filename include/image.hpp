@@ -8,7 +8,7 @@ namespace MonoBind
 	class Image
 	{
 	public:
-		Image(MonoImage* image)
+		explicit Image(MonoImage* image)
 			:m_image(image)
 		{}
 

@@ -20,7 +20,7 @@ namespace MonoBind
 
  	ObjectPtr Object::invoke(const char* name)
  	{
- 		Class klass = getClass();
+ 		Class klass(getClass());
  		Method method = klass.getMethod(name);
  		return method.invoke(m_object);
  	}
@@ -38,7 +38,7 @@ namespace MonoBind
 	ObjectPtr Object::invoke(const char* name, ArgsT... args)
 	{
 		void* monoArgs[] = { convertArg(args)... };
-		Class klass = getClass();
+		Class klass(getClass());
 		Method method = klass.getMethod(name);
 		return method.invoke(m_object, monoArgs);
 	}

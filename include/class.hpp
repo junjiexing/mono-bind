@@ -9,7 +9,7 @@ namespace MonoBind
 	class Class
 	{
 	public:
-		Class(MonoClass* klass)
+		explicit Class(MonoClass* klass)
 			:m_class(klass)
 		{}
 

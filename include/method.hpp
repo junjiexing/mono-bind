@@ -7,7 +7,7 @@ namespace MonoBind
 	class Method
 	{
 	public:
-		Method(MonoMethod* method)
+		explicit Method(MonoMethod* method)
 			:m_method(method)
 		{}
 

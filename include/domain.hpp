@@ -9,6 +9,11 @@ namespace MonoBind
 	class Domain
 	{
 	public:
+        Domain(const Domain&) = delete;
+        Domain& operator=(const Domain&) = delete;
+        Domain(Domain&&) = delete;
+        Domain& operator=(Domain&&) = delete;
+
 		static Domain& get();
 
 		void initJit(const char* file);
@@ -34,10 +39,6 @@ namespace MonoBind
 		}
 	private:
 		Domain() = default;
-		Domain(const Domain&) = delete;
- 		Domain& operator=(const Domain&) = delete;
- 		Domain(Domain&&) = delete;
- 		Domain& operator=(Domain&&) = delete;
 
 
 		MonoDomain* m_domain = nullptr;
