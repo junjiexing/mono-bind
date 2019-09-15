@@ -42,15 +42,22 @@ TEST_CASE("Invoke member function with params test", "[invoke]")
 {
 	auto klass = MonoBind::Domain::get().openAssembly("TestLib.dll").getImage().classFromName("TestLib", "InvokeTest2");
 	REQUIRE(klass.raw() != nullptr);
-	{
-		auto obj = klass.New();
-		REQUIRE(obj->raw() != nullptr);
+    auto obj = klass.New();
+    REQUIRE(obj->raw() != nullptr);
 
-		auto ret = obj->invoke("CubicSum", -80538738812075974, 80435758145817515, 12602123297335631);
-		REQUIRE(ret->to<int>() == 42);
-	}
+    auto ret = obj->invoke("CubicSum", -80538738812075974, 80435758145817515, 12602123297335631);
+    REQUIRE(ret->to<int>() == 42);
 
-	MonoBind::Domain::get().cleanup();	// FIXME: ???
+    int a = 1;
+    obj->invoke("OutTest", std::ref(a));
+    REQUIRE(a == 42);
+
+    a = 41;
+    obj->invoke("OutTest", std::ref(a));
+    REQUIRE(a == 42);
+
+
+    MonoBind::Domain::get().cleanup();	// FIXME: ???
 }
 
 

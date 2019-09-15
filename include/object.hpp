@@ -84,6 +84,12 @@ namespace MonoBind
 			return mono_string_new_utf16(getDomain(), reinterpret_cast<const mono_unichar2*>(str.data()), str.size());
 		}
 
+		template <typename T>
+		T* convertArg(std::reference_wrapper<T> arg)
+        {
+		    return &arg.get();
+        }
+
 		template<typename T>
 		T* convertArg(T& arg)
 		{

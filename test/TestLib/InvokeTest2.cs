@@ -13,5 +13,15 @@ namespace TestLib
         {
             return a + b;
         }
+
+        public void OutTest(out int a)
+        {
+            a = 42;
+        }
+
+        public void RefTest(ref int a)
+        {
+            a += 1;
+        }
     }
 }
