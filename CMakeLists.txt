@@ -18,7 +18,11 @@ function(csharp_dep target csproj)
             COMMAND ${MSBUILD_EXECUTABLE} ${csproj} -property:OutDir=${CMAKE_BINARY_DIR} -property:OutputPath=${CMAKE_BINARY_DIR} -property:IntermediateOutputPath=${CMAKE_BINARY_DIR}/obj/)
 endfunction()
 
-add_definitions(-DMONO_PATH_STR=R\"_\(${MONO_ROOT}/Home\)_\")
+if(APPLE)
+    add_definitions(-DMONO_PATH_STR=R\"_\(${MONO_ROOT}/Home\)_\")
+else()
+    add_definitions(-DMONO_PATH_STR=R\"_\(${MONO_ROOT}\)_\")
+endif()
 include_directories(include 3rdparty/catch2 ${MONO_INCLUDE_DIR})
 
 add_executable(HelloWorld example/HelloWorld/HelloHost/HelloHost.cpp)

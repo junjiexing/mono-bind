@@ -1,7 +1,7 @@
 #pragma once
 
 #include <mono/metadata/class.h>
-
+#include <cstring>
 
 
 namespace MonoBind
@@ -23,7 +23,7 @@ namespace MonoBind
 			void* iter = nullptr;
 			while ((method = mono_class_get_methods(m_class, &iter)))
 			{
-				if (strcmp(mono_method_get_name(method), name) == 0) return Method(method);
+				if (std::strcmp(mono_method_get_name(method), name) == 0) return Method(method);
 			}
 
 			return Method(nullptr);
