@@ -37,11 +37,6 @@ namespace MonoBind
 
 		MonoDomain* getDomain() const;
 
-// 		template<typename ...ArgsT>
-// 		ObjectPtr invoke(const char* name, ArgsT& ... args);
-
-		//TODO: ref & out
-
 		template<typename ...ArgsT>
 		ObjectPtr invoke(const char* name, ArgsT ... args);
 

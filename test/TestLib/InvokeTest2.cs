@@ -23,5 +23,10 @@ namespace TestLib
         {
             a += 1;
         }
+
+        public string StructTest(TestStruct1 st)
+        {
+            return $"{st.s}{st.a}{st.b}";
+        }
     }
 }

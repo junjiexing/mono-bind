@@ -14,6 +14,12 @@ struct TestIniter
 	}
 } test_init_instance;
 
+struct TestStruct1
+{
+    MonoBind::StringWrapper str;
+    int a;
+    int b;
+};
 
 TEST_CASE("Invoke member function without param test", "[invoke]")
 {
@@ -36,6 +42,13 @@ TEST_CASE("Invoke member function without param test", "[invoke]")
 
 	ret = obj->invoke("ReturnString");
 	REQUIRE(ret->to<std::string>() == "42");
+
+	ret = obj->invoke("ReturnStruct");
+	auto st = ret->to<TestStruct1>();
+    REQUIRE(st.a == 1);
+    REQUIRE(st.b == 2);
+    auto str = st.str.toString();
+    REQUIRE(str == "1");
 }
 
 TEST_CASE("Invoke member function with params test", "[invoke]")
@@ -56,6 +69,8 @@ TEST_CASE("Invoke member function with params test", "[invoke]")
     obj->invoke("OutTest", std::ref(a));
     REQUIRE(a == 42);
 
+    ret = obj->invoke("StructTest", TestStruct1{"a", 1, 2});
+    REQUIRE(ret->to<std::string>() == "a12");
 
     MonoBind::Domain::get().cleanup();	// FIXME: ???
 }

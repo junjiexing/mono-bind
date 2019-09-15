@@ -34,6 +34,7 @@ namespace MonoBind
 #include <image.hpp>
 #include <assembly.hpp>
 #include <domain.hpp>
+#include <string_wrapper.hpp>
 
 #include <object.ipp>
 #include <method.ipp>

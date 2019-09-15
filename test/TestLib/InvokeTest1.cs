@@ -95,5 +95,10 @@ namespace TestLib
         {
             return "42";
         }
+
+        public TestStruct1 ReturnStruct()
+        {
+            return new TestStruct1{s = "1", a = 1, b = 2};
+        }
     }
 }
