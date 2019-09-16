@@ -7,11 +7,6 @@
 
 namespace MonoBind
 {
-	class Domain;
-	using DomainPtr = std::shared_ptr<Domain>;
-	using DomainWeakPtr = std::weak_ptr<Domain>;
-
-
 	inline void initPath(const char* assembliesPath, const char* configFileName = nullptr)
 	{
 		mono_set_assemblies_path(assembliesPath);
@@ -23,7 +18,6 @@ namespace MonoBind
 		mono_set_dirs(assemblyDir, configDir);
 		mono_config_parse(configFileName);
 	}
-
 }
 
 
