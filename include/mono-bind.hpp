@@ -21,7 +21,7 @@ namespace MonoBind
 }
 
 
-
+#include <type.hpp>
 #include <object.hpp>
 #include <class.hpp>
 #include <image.hpp>
@@ -34,5 +34,5 @@ namespace MonoBind
 #include <image.ipp>
 #include <assembly.ipp>
 #include <domain.ipp>
-
+#include <type.ipp>
 

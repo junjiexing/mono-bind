@@ -49,31 +49,69 @@ TEST_CASE("Invoke member function without param test", "[invoke]")
 //     REQUIRE(st.b == 2);
 //     auto str = st.str.toString();
 //     REQUIRE(str == "1");
+
+	// TODO: add return array test
 }
 
 TEST_CASE("Invoke member function with params test", "[invoke]")
 {
 	auto klass = MonoBind::Domain::get().openAssembly("TestLib.dll").getImage().classFromName("TestLib", "InvokeTest2");
 	REQUIRE(klass.raw() != nullptr);
+
+	auto obj = klass.New();
+	REQUIRE(obj->raw() != nullptr);
+
+	auto ret = obj->invoke("CubicSum", -80538738812075974, 80435758145817515, 12602123297335631);
+	REQUIRE(ret->to<int>() == 42);
+
+	int a = 1;
+	obj->invoke("OutTest", std::ref(a));
+	REQUIRE(a == 42);
+
+	a = 41;
+	obj->invoke("OutTest", std::ref(a));
+	REQUIRE(a == 42);
+
+	//TODO: test string params
+
+	//ret = obj->invoke("StructTest", TestStruct1{"a", 1, 2});	//SIGSEGV on mono 3.2.3
+	//REQUIRE(ret->to<std::string>() == "a12");
+
+	// TODO: add array params test
+	// TODO: delegate test
+}
+
+// TODO: static method invoke test
+// TODO: exception test
+
+TEST_CASE("Getter and Setter test", "[Object]")
+{
+	auto klass = MonoBind::Domain::get().openAssembly("TestLib.dll").getImage().classFromName("TestLib", "GetterSetterTest");
+	REQUIRE(klass.raw() != nullptr);
+
 	{
 		auto obj = klass.New();
 		REQUIRE(obj->raw() != nullptr);
 
-		auto ret = obj->invoke("CubicSum", -80538738812075974, 80435758145817515, 12602123297335631);
-		REQUIRE(ret->to<int>() == 42);
+		obj->setField("_a", 40);
+		auto a = obj->getField<int>("_a");
+		REQUIRE(a == 40);
 
-		int a = 1;
-		obj->invoke("OutTest", std::ref(a));
-		REQUIRE(a == 42);
+		obj->setField("_b", std::string("111"));
+		auto b = obj->getField<std::string>("_b");
+		REQUIRE(b == "111");
 
-		a = 41;
-		obj->invoke("OutTest", std::ref(a));
-		REQUIRE(a == 42);
+		obj->setProp("A", 40);
+		REQUIRE(obj->getField<int>("_a") == 41);
+		REQUIRE(obj->getProp<int>("A") == 42);
 
-		//ret = obj->invoke("StructTest", TestStruct1{"a", 1, 2});	//SIGSEGV on mono 3.2.3
-		//REQUIRE(ret->to<std::string>() == "a12");
+		obj->setProp("B", "222");
+		REQUIRE(obj->getField<std::string>("_b") == "222");
+		REQUIRE(obj->getProp<std::string>("B") == "222");
 	}
-    MonoBind::Domain::get().cleanup();	//XXX: only need on mono 3.2.3
+
+
+
+
+	MonoBind::Domain::get().cleanup();	//XXX: only need on mono 3.2.3
 }
-
-
