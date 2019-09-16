@@ -72,9 +72,8 @@ TEST_CASE("Invoke member function with params test", "[invoke]")
 
 		//ret = obj->invoke("StructTest", TestStruct1{"a", 1, 2});	//SIGSEGV on mono 3.2.3
 		//REQUIRE(ret->to<std::string>() == "a12");
-
 	}
-    MonoBind::Domain::get().cleanup();	// FIXME: ???
+    MonoBind::Domain::get().cleanup();	//XXX: only need on mono 3.2.3
 }
 
 

@@ -40,7 +40,9 @@ namespace MonoBind
 		template<typename ...ArgsT>
 		ObjectPtr invoke(const char* name, ArgsT ... args);
 
-		ObjectPtr invoke(const char* name);
+		//ObjectPtr invoke(const char* name);
+
+		ObjectPtr invoke(const char* name, void** params = nullptr, MonoObject** exec = nullptr);
 
 		template<typename T>
 		typename std::enable_if<!std::is_same<T, std::string>::value, T>::type to()

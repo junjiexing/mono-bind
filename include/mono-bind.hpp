@@ -29,7 +29,6 @@ namespace MonoBind
 
 
 #include <object.hpp>
-#include <method.hpp>
 #include <class.hpp>
 #include <image.hpp>
 #include <assembly.hpp>
@@ -37,7 +36,6 @@ namespace MonoBind
 #include <string_wrapper.hpp>
 
 #include <object.ipp>
-#include <method.ipp>
 #include <class.ipp>
 #include <image.ipp>
 #include <assembly.ipp>
