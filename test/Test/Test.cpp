@@ -72,7 +72,11 @@ TEST_CASE("Invoke member function with params test", "[invoke]")
 	obj->invoke("OutTest", std::ref(a));
 	REQUIRE(a == 42);
 
-	//TODO: test string params
+	ret = obj->invoke("StrCat", "4", "2");
+	REQUIRE(ret->to <std::string>() == "42");
+
+	ret = obj->invoke("StrCat", std::string("4"), std::string("2"));
+	REQUIRE(ret->to <std::string>() == "42");
 
 	//ret = obj->invoke("StructTest", TestStruct1{"a", 1, 2});	//SIGSEGV on mono 3.2.3
 	//REQUIRE(ret->to<std::string>() == "a12");

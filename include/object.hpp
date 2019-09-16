@@ -93,7 +93,7 @@ namespace MonoBind
 		typename std::enable_if<std::is_same<T, std::string>::value, void>::type setField(const char* name, T v)
 		{
 			auto field = mono_class_get_field_from_name(getClass(), name);
-			mono_field_set_value(m_object, field, convertArg(std::forward<T>(v)));
+			mono_field_set_value(m_object, field, convertArg(v));
 		}
 
 		// TODO: getField and setField support object
@@ -126,6 +126,11 @@ namespace MonoBind
 		}
 
 		MonoString* convertArg(const std::string& str)
+		{
+			return mono_string_new_len(getDomain(), str.data(), str.size());
+		}
+
+		MonoString* convertArg(std::string& str)
 		{
 			return mono_string_new_len(getDomain(), str.data(), str.size());
 		}
