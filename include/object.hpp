@@ -43,10 +43,7 @@ namespace MonoBind
 		typename std::enable_if<std::is_same<T, std::string>::value, T>::type getField(const char* name);
 
 		template<typename T>
-		typename std::enable_if<!std::is_same<T, std::string>::value, void>::type setField(const char* name, T v);
-
-		template<typename T>
-		typename std::enable_if<std::is_same<T, std::string>::value, void>::type setField(const char* name, T v);
+		void setField(const char* name, T v);
 
 		// TODO: getField and setField support object
 

@@ -77,14 +77,7 @@ namespace MonoBind
 	}
 
 	template<typename T>
-	typename std::enable_if<!std::is_same<T, std::string>::value, void>::type Object::setField(const char* name, T v)
-	{
-		auto field = mono_class_get_field_from_name(getClass(), name);
-		mono_field_set_value(m_object, field, &v);
-	}
-
-	template<typename T>
-	typename std::enable_if<std::is_same<T, std::string>::value, void>::type Object::setField(const char* name, T v)
+	void Object::setField(const char* name, T v)
 	{
 		auto field = mono_class_get_field_from_name(getClass(), name);
 		mono_field_set_value(m_object, field, Method::convertArg(v));
