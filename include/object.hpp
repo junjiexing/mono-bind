@@ -58,9 +58,7 @@ namespace MonoBind
 		Object(MonoObject* object)
 			:m_object(object),
 			m_gchandle(mono_gchandle_new(object, true))
-		{
-			std::cout << "new" << m_gchandle << std::endl;
-		}
+		{}
 		MonoObject* m_object;
 		uint32_t m_gchandle;
 	};

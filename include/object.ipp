@@ -4,7 +4,6 @@ namespace MonoBind
 {
 	Object::~Object()
 	{
-		std::cout << "free" << m_gchandle << std::endl;
 		mono_gchandle_free(m_gchandle);
 	}
 

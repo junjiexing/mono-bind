@@ -128,20 +128,14 @@ MonoBind::StringWrapper cfunc(MonoBind::StringWrapper str, int i) {
 
 TEST_CASE("C# call c func test", "[Interop]")
 {
-	MonoBind::regFunc("TestLib.InteropTest::CFunc(string,int)", &cfunc);
+	MonoBind::regFunc("TestLib.InteropTest::CFunc(string,int)", (const void*)&cfunc);
 	auto klass = MonoBind::Domain::get().openAssembly("TestLib.dll").getImage().classFromName("TestLib", "InteropTest");
 	REQUIRE(klass.raw() != nullptr);
 
-	{
-		auto ret = klass.invoke("RegFuncTest", "foo", 123);
-		REQUIRE(ret->to<std::string>() == "success");
-		REQUIRE(g_str == "foo");
-		REQUIRE(g_i == 123);
-
-	}
-
-
-	//MonoBind::Domain::get().cleanup();	//XXX: only need on mono 3.2.3
+    auto ret = klass.invoke("RegFuncTest", "foo", 123); // XXX: not supported on 3.2.3
+    REQUIRE(ret->to<std::string>() == "success");
+    REQUIRE(g_str == "foo");
+    REQUIRE(g_i == 123);
 }
 
 
