@@ -56,7 +56,10 @@ namespace MonoBind
 	}
 
 	template<typename T>
-	typename std::enable_if<!std::is_same<T, std::string>::value, T>::type Object::getField(const char* name)
+	typename std::enable_if<
+	        !std::is_same<T, std::string>::value
+	        && !std::is_same<T, ObjectPtr>::value,
+	        T>::type  Object::getField(const char* name)
 	{
 		auto field = mono_class_get_field_from_name(getClass(), name);
 		T v;
@@ -68,13 +71,19 @@ namespace MonoBind
 	typename std::enable_if<std::is_same<T, std::string>::value, T>::type Object::getField(const char* name)
 	{
 		auto field = mono_class_get_field_from_name(getClass(), name);
-		MonoString* mstr;
-		mono_field_get_value(m_object, field, &mstr);
-		auto cStr = mono_string_to_utf8(mstr);
-		std::string str(cStr);
-		mono_free(cStr);
-		return str;
+		StringWrapper str;
+		mono_field_get_value(m_object, field, &str);
+		return str.toString();
 	}
+
+    template<typename T>
+    typename std::enable_if<std::is_same<T, ObjectPtr>::value, T>::type Object::getField(const char* name)
+    {
+        auto field = mono_class_get_field_from_name(getClass(), name);
+        MonoObject* mobj;
+        mono_field_get_value(m_object, field, &mobj);
+        return Object::attachObject(mobj);
+    }
 
 	template<typename T>
 	void Object::setField(const char* name, T v)
@@ -84,7 +93,7 @@ namespace MonoBind
 	}
 
 	template<typename T>
-	T Object::getProp(const char* name)
+    typename std::enable_if<!std::is_same<T, ObjectPtr>::value, T>::type Object::getProp(const char* name)
 	{
 		auto prop = mono_class_get_property_from_name(getClass(), name);
 		auto obj = Object::attachObject(mono_property_get_value(prop, m_object, nullptr, nullptr));
@@ -92,7 +101,17 @@ namespace MonoBind
 		return obj->to<T>();
 	}
 
-	template<typename T>
+    template<typename T>
+    typename std::enable_if<std::is_same<T, ObjectPtr>::value, T>::type Object::getProp(const char* name)
+    {
+        auto prop = mono_class_get_property_from_name(getClass(), name);
+        auto obj = Object::attachObject(mono_property_get_value(prop, m_object, nullptr, nullptr));
+        //TODO: exception
+        return obj;
+    }
+
+
+    template<typename T>
 	void Object::setProp(const char* name, T v)
 	{
 		auto prop = mono_class_get_property_from_name(getClass(), name);

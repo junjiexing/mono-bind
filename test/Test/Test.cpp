@@ -102,7 +102,8 @@ TEST_CASE("Invoke member function with params test", "[invoke]")
 
 TEST_CASE("Getter and Setter test", "[Object]")
 {
-	auto klass = MonoBind::Domain::get().openAssembly("TestLib.dll").getImage().classFromName("TestLib", "GetterSetterTest");
+    auto image = MonoBind::Domain::get().openAssembly("TestLib.dll").getImage();
+	auto klass = image.classFromName("TestLib", "GetterSetterTest");
 	REQUIRE(klass.raw() != nullptr);
 
 	auto obj = klass.New();
@@ -123,6 +124,19 @@ TEST_CASE("Getter and Setter test", "[Object]")
 	obj->setProp("B", "222");
 	REQUIRE(obj->getField<std::string>("_b") == "222");
 	REQUIRE(obj->getProp<std::string>("B") == "222");
+
+	auto fieldClass = image.classFromName("TestLib", "Field");
+	auto fieldObj1 = fieldClass.New();
+	fieldObj1->setField("a", 1);
+	obj->setField("_field", fieldObj1);
+	auto fieldObj1_ = obj->getField<MonoBind::ObjectPtr>("_field");
+	REQUIRE(fieldObj1_->getField<int>("a") == 1);
+
+	auto fieldObj2 = fieldClass.New();
+	fieldObj2->setField("a", 2);
+	obj->setProp("F", fieldObj2);
+	auto fieldObj2_ = obj->getProp<MonoBind::ObjectPtr>("F");
+	REQUIRE(fieldObj2_->getField<int>("a") == 2);
 
 }
 

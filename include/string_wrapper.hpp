@@ -6,6 +6,10 @@ namespace MonoBind
     class StringWrapper
     {
     public:
+        StringWrapper()
+            :m_mstr(nullptr)
+        {}
+
         StringWrapper(MonoString* mstr)
             : m_mstr(mstr)
         {}

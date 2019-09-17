@@ -28,8 +28,6 @@ namespace MonoBind
 		template<typename ...ArgsT>
 		ObjectPtr invoke(const char* name, ArgsT const& ... args);
 
-		// TODO: invoke support object
-
 		template<typename T>
 		typename std::enable_if<!std::is_same<T, std::string>::value, T>::type to();
 
@@ -37,19 +35,29 @@ namespace MonoBind
 		typename std::enable_if<std::is_same<T, std::string>::value, T>::type to();
 
 		template<typename T>
-		typename std::enable_if<!std::is_same<T, std::string>::value, T>::type getField(const char* name);
+		typename std::enable_if<
+		        !std::is_same<T, std::string>::value
+		        && !std::is_same<T, ObjectPtr>::value,
+		        T>::type getField(const char* name);
 
-		template<typename T>
-		typename std::enable_if<std::is_same<T, std::string>::value, T>::type getField(const char* name);
+        template<typename T>
+        typename std::enable_if<std::is_same<T, std::string>::value, T>::type getField(const char* name);
+
+        template<typename T>
+        typename std::enable_if<std::is_same<T, ObjectPtr>::value, T>::type getField(const char* name);
+
+        // TODO: getField support object
 
 		template<typename T>
 		void setField(const char* name, T v);
 
-		// TODO: getField and setField support object
 
 
-		template<typename T>
-		T getProp(const char* name);
+        template<typename T>
+        typename std::enable_if<!std::is_same<T, ObjectPtr>::value, T>::type getProp(const char* name);
+
+        template<typename T>
+        typename std::enable_if<std::is_same<T, ObjectPtr>::value, T>::type getProp(const char* name);
 
 		template<typename T>
 		void setProp(const char* name, T v);
