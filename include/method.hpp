@@ -41,7 +41,10 @@ namespace MonoBind
         template <typename T>
         static T* convertArg(std::reference_wrapper<T> arg);
 
-		template<typename T>
+        template <typename T>
+        static MonoArray* convertArg(Array<T>& arg);
+
+        template<typename T>
 		static T* convertArg(T& arg);
 
 		template<typename T>

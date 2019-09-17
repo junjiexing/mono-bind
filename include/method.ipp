@@ -74,4 +74,10 @@ namespace MonoBind
     {
         return arg;
     }
+
+    template<typename T>
+    MonoArray *Method::convertArg(Array<T>& arg)
+    {
+        return arg.raw();
+    }
 }

@@ -40,5 +40,16 @@ namespace TestLib
         {
             return param.a + param.b;
         }
+
+        public int SumArray(int[] arr)
+        {
+            int sum = 0;
+            foreach (var a in arr)
+            {
+                sum += a;
+            }
+
+            return sum;
+        }
     }
 }

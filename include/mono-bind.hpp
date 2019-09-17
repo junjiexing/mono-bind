@@ -30,6 +30,7 @@ namespace MonoBind
 	}
 }
 
+#include <array.hpp>
 #include <method.hpp>
 #include <type.hpp>
 #include <object.hpp>
@@ -39,6 +40,7 @@ namespace MonoBind
 #include <domain.hpp>
 #include <string_wrapper.hpp>
 
+#include <array.ipp>
 #include <method.ipp>
 #include <object.ipp>
 #include <class.ipp>

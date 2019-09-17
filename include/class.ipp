@@ -1,6 +1,8 @@
 #pragma once
 
 
+#include "class.hpp"
+
 namespace MonoBind
 {
 	ObjectPtr Class::New()
@@ -25,5 +27,11 @@ namespace MonoBind
 	{
 		return getMethod(name).invoke(nullptr, args...);
 	}
+
+    Class& Class::intClass()
+    {
+	    static Class c(mono_get_int32_class());
+        return c;
+    }
 
 }

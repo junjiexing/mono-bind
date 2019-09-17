@@ -13,7 +13,7 @@ namespace MonoBind
 			:m_class(klass)
 		{}
 
-		MonoClass* raw() { return m_class; };
+		MonoClass* raw() const { return m_class; };
 
         inline ObjectPtr New();
 
@@ -22,6 +22,7 @@ namespace MonoBind
 		template<typename ...ArgsT>
 		ObjectPtr invoke(const char* name, ArgsT const& ... args);
 
+		inline static Class& intClass();
 	private:
 		MonoClass* m_class;
 	};
