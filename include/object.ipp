@@ -2,11 +2,6 @@
 
 namespace MonoBind
 {
-	Object::~Object()
-	{
-		mono_gchandle_free(m_gchandle);
-	}
-
 	ObjectPtr Object::createObject(MonoDomain* domain, MonoClass* klass)
 	{
 		auto object = mono_object_new(domain, klass);

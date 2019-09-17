@@ -14,24 +14,16 @@ namespace MonoBind
         Domain(Domain&&) = delete;
         Domain& operator=(Domain&&) = delete;
 
-		static Domain& get();
+        inline static Domain& get();
 
-		void initJit(const char* file);
-		void initJit(const char* file, const char* ver);
+        inline void initJit(const char* file);
+        inline void initJit(const char* file, const char* ver);
 
-		Assembly openAssembly(const char* name);
+        inline Assembly openAssembly(const char* name);
 
-		MonoDomain* raw();
+        inline MonoDomain* raw();
 
-		void cleanup()
-		{
-			if (m_domain)
-			{
-				mono_jit_cleanup(m_domain);
-				m_domain = nullptr;
-			}
-
-		}
+        inline void cleanup();
 
 		~Domain()
 		{

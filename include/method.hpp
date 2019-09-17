@@ -19,7 +19,7 @@ namespace MonoBind
 		template<typename ...ArgsT>
 		ObjectPtr invoke(MonoObject* obj, ArgsT ... args);
 
-		ObjectPtr invoke(MonoObject* obj, void** params = nullptr, MonoObject** exec = nullptr);
+		inline ObjectPtr invoke(MonoObject* obj, void** params = nullptr, MonoObject** exec = nullptr);
 
 		MonoMethod* raw() const 
 		{

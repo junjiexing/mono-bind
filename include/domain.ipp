@@ -22,13 +22,21 @@ namespace MonoBind
 		m_domain = mono_jit_init_version(file, ver);
 	}
 
-	inline MonoDomain* Domain::raw()
+	MonoDomain* Domain::raw()
 	{
 		return m_domain;
 	}
 
+    void Domain::cleanup()
+    {
+        if (m_domain)
+        {
+            mono_jit_cleanup(m_domain);
+            m_domain = nullptr;
+        }
+    }
 
-	inline Assembly Domain::openAssembly(const char* name)
+	Assembly Domain::openAssembly(const char* name)
 	{
 		return Assembly(mono_domain_assembly_open(m_domain, name));
 	}

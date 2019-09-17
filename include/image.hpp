@@ -12,7 +12,7 @@ namespace MonoBind
 			:m_image(image)
 		{}
 
-		Class classFromName(const char* nameSpace, const char* name);
+        inline Class classFromName(const char* nameSpace, const char* name);
 	private:
 		MonoImage* m_image;
 	};

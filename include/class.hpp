@@ -15,9 +15,9 @@ namespace MonoBind
 
 		MonoClass* raw() { return m_class; };
 
-		ObjectPtr New();
+        inline ObjectPtr New();
 
-		Method getMethod(const char* name);
+        inline Method getMethod(const char* name);
 
 		template<typename ...ArgsT>
 		ObjectPtr invoke(const char* name, ArgsT const& ... args);

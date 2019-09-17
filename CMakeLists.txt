@@ -29,6 +29,6 @@ add_executable(HelloWorld example/HelloWorld/HelloHost/HelloHost.cpp)
 target_link_libraries(HelloWorld ${MONO_LIBRARIES})
 csharp_dep(HelloWorld ${CMAKE_SOURCE_DIR}/example/HelloWorld/Hello/Hello.csproj)
 
-add_executable(Test test/Test/Test.cpp)
+add_executable(Test test/Test/Test.cpp test/Test/dummy.cpp)
 target_link_libraries(Test ${MONO_LIBRARIES})
 csharp_dep(Test ${CMAKE_SOURCE_DIR}/test/TestLib/TestLib.csproj)

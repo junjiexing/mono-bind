@@ -10,17 +10,20 @@ namespace MonoBind
 	class Object
 	{
 	public:
-		~Object();
+		~Object()
+        {
+            mono_gchandle_free(m_gchandle);
+        }
 
-		static ObjectPtr createObject(MonoDomain* domain, MonoClass* klass);
+		inline static ObjectPtr createObject(MonoDomain* domain, MonoClass* klass);
 
-		static ObjectPtr attachObject(MonoObject* object);
+		inline static ObjectPtr attachObject(MonoObject* object);
 
-		MonoObject* raw() const;
+		inline MonoObject* raw() const;
 
-		MonoClass* getClass() const;
+        inline MonoClass* getClass() const;
 
-		MonoDomain* getDomain() const;
+        inline MonoDomain* getDomain() const;
 
 		template<typename ...ArgsT>
 		ObjectPtr invoke(const char* name, ArgsT const& ... args);
