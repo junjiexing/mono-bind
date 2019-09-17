@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GetterSetterTest.cs" />
+    <Compile Include="InteropTest.cs" />
     <Compile Include="InvokeTest1.cs" />
     <Compile Include="InvokeTest2.cs" />
     <Compile Include="TestStruct1.cs" />

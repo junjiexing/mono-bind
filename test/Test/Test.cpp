@@ -1,4 +1,5 @@
-﻿#include <mono-bind.hpp>
+﻿#include <iostream>
+#include <mono-bind.hpp>
 
 #define CATCH_CONFIG_MAIN
 #include <catch.hpp>
@@ -93,29 +94,54 @@ TEST_CASE("Getter and Setter test", "[Object]")
 	auto klass = MonoBind::Domain::get().openAssembly("TestLib.dll").getImage().classFromName("TestLib", "GetterSetterTest");
 	REQUIRE(klass.raw() != nullptr);
 
+	auto obj = klass.New();
+	REQUIRE(obj->raw() != nullptr);
+
+	obj->setField("_a", 40);
+	auto a = obj->getField<int>("_a");
+	REQUIRE(a == 40);
+
+	obj->setField("_b", std::string("111"));
+	auto b = obj->getField<std::string>("_b");
+	REQUIRE(b == "111");
+
+	obj->setProp("A", 40);
+	REQUIRE(obj->getField<int>("_a") == 41);
+	REQUIRE(obj->getProp<int>("A") == 42);
+
+	obj->setProp("B", "222");
+	REQUIRE(obj->getField<std::string>("_b") == "222");
+	REQUIRE(obj->getProp<std::string>("B") == "222");
+
+}
+
+std::string g_str;
+int g_i;
+
+MonoBind::StringWrapper cfunc(MonoBind::StringWrapper str, int i) {
+	g_str = str.toString();
+	g_i = i;
+	return "success";
+}
+
+
+
+TEST_CASE("C# call c func test", "[Interop]")
+{
+	MonoBind::regFunc("TestLib.InteropTest::CFunc(string,int)", &cfunc);
+	auto klass = MonoBind::Domain::get().openAssembly("TestLib.dll").getImage().classFromName("TestLib", "InteropTest");
+	REQUIRE(klass.raw() != nullptr);
+
 	{
-		auto obj = klass.New();
-		REQUIRE(obj->raw() != nullptr);
+		auto ret = klass.invoke("RegFuncTest", "foo", 123);
+		REQUIRE(ret->to<std::string>() == "success");
+		REQUIRE(g_str == "foo");
+		REQUIRE(g_i == 123);
 
-		obj->setField("_a", 40);
-		auto a = obj->getField<int>("_a");
-		REQUIRE(a == 40);
-
-		obj->setField("_b", std::string("111"));
-		auto b = obj->getField<std::string>("_b");
-		REQUIRE(b == "111");
-
-		obj->setProp("A", 40);
-		REQUIRE(obj->getField<int>("_a") == 41);
-		REQUIRE(obj->getProp<int>("A") == 42);
-
-		obj->setProp("B", "222");
-		REQUIRE(obj->getField<std::string>("_b") == "222");
-		REQUIRE(obj->getProp<std::string>("B") == "222");
 	}
 
 
-
-
-	MonoBind::Domain::get().cleanup();	//XXX: only need on mono 3.2.3
+	//MonoBind::Domain::get().cleanup();	//XXX: only need on mono 3.2.3
 }
+
+

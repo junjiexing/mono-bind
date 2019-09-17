@@ -171,6 +171,8 @@
     <ClInclude Include="..\..\..\include\domain.ipp" />
     <ClInclude Include="..\..\..\include\image.hpp" />
     <ClInclude Include="..\..\..\include\image.ipp" />
+    <ClInclude Include="..\..\..\include\method.hpp" />
+    <ClInclude Include="..\..\..\include\method.ipp" />
     <ClInclude Include="..\..\..\include\mono-bind.hpp" />
     <ClInclude Include="..\..\..\include\object.hpp" />
     <ClInclude Include="..\..\..\include\object.ipp" />

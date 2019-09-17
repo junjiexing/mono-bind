@@ -17,17 +17,11 @@ namespace MonoBind
 
 		ObjectPtr New();
 
-		MonoMethod* getMethod(const char* name)
-		{
-			MonoMethod* method = nullptr;
-			void* iter = nullptr;
-			while ((method = mono_class_get_methods(m_class, &iter)))
-			{
-				if (std::strcmp(mono_method_get_name(method), name) == 0) return method;
-			}
+		Method getMethod(const char* name);
 
-			return nullptr;
-		}
+		template<typename ...ArgsT>
+		ObjectPtr invoke(const char* name, ArgsT const& ... args);
+
 	private:
 		MonoClass* m_class;
 	};
