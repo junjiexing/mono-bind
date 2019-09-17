@@ -3,6 +3,11 @@ using System;
 
 namespace TestLib
 {
+    public class Ret
+    {
+        public int ret;
+    }
+
     public class InvokeTest1
     {
 
@@ -99,6 +104,11 @@ namespace TestLib
         public TestStruct1 ReturnStruct()
         {
             return new TestStruct1{s = "1", a = 1, b = 2};
+        }
+
+        public Ret ReturnClass()
+        {
+            return new Ret{ret = 42};
         }
     }
 }

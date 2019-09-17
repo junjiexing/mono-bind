@@ -21,59 +21,31 @@ namespace MonoBind
 
 		inline ObjectPtr invoke(MonoObject* obj, void** params = nullptr, MonoObject** exec = nullptr);
 
-		MonoMethod* raw() const 
-		{
-			return m_method.get();
-		}
+		inline MonoMethod* raw() const;
 
-		explicit operator bool() const noexcept
-		{
-			return raw() != nullptr;
-		}
+		inline explicit operator bool() const noexcept;
 
 
-		static MonoString* convertArg(const char* str)
-		{
-			return mono_string_new(mono_domain_get(), str);
-		}
+        inline static MonoString* convertArg(const char* str);
 
-		static MonoString* convertArg(const std::string& str)
-		{
-			return mono_string_new_len(mono_domain_get(), str.data(), str.size());
-		}
+        inline static MonoString* convertArg(const std::string& str);
 
-		static MonoString* convertArg(std::string& str)
-		{
-			return mono_string_new_len(mono_domain_get(), str.data(), str.size());
-		}
+        inline static MonoString* convertArg(std::string& str);
 
-		static MonoString* convertArg(const wchar_t* str)
-		{
-			return mono_string_new_utf16(mono_domain_get(), reinterpret_cast<const mono_unichar2*>(str), wcslen(str));
-		}
+        inline static MonoString* convertArg(const wchar_t* str);
 
-		static MonoString* convertArg(const std::wstring& str)
-		{
-			return mono_string_new_utf16(mono_domain_get(), reinterpret_cast<const mono_unichar2*>(str.data()), str.size());
-		}
+        inline static MonoString* convertArg(const std::wstring& str);
 
-		template <typename T>
-		static T* convertArg(std::reference_wrapper<T> arg)
-		{
-			return &arg.get();
-		}
+        inline static MonoObject* convertArg(ObjectPtr obj);
+
+        template <typename T>
+        static T* convertArg(std::reference_wrapper<T> arg);
 
 		template<typename T>
-		static T* convertArg(T& arg)
-		{
-			return &arg;
-		}
+		static T* convertArg(T& arg);
 
 		template<typename T>
-		static T* convertArg(T* arg)
-		{
-			return arg;
-		}
+		static T* convertArg(T* arg);
 
 	private:
 		std::shared_ptr<MonoMethod> m_method;

@@ -44,19 +44,23 @@ TEST_CASE("Invoke member function without param test", "[invoke]")
 	ret = obj->invoke("ReturnString");
 	REQUIRE(ret->to<std::string>() == "42");
 
-// 	ret = obj->invoke("ReturnStruct");
-// 	auto st = ret->to<TestStruct1>();	//SIGSEGV on mono 3.2.3
-//     REQUIRE(st.a == 1);
-//     REQUIRE(st.b == 2);
-//     auto str = st.str.toString();
-//     REQUIRE(str == "1");
+ 	ret = obj->invoke("ReturnStruct");
+ 	auto st = ret->to<TestStruct1>();	//SIGSEGV on mono 3.2.3
+    REQUIRE(st.a == 1);
+    REQUIRE(st.b == 2);
+    auto str = st.str.toString();
+    REQUIRE(str == "1");
+
+    ret = obj->invoke("ReturnClass");
+    REQUIRE(ret->getField<int>("ret") == 42);
 
 	// TODO: add return array test
 }
 
 TEST_CASE("Invoke member function with params test", "[invoke]")
 {
-	auto klass = MonoBind::Domain::get().openAssembly("TestLib.dll").getImage().classFromName("TestLib", "InvokeTest2");
+    auto image = MonoBind::Domain::get().openAssembly("TestLib.dll").getImage();
+	auto klass = image.classFromName("TestLib", "InvokeTest2");
 	REQUIRE(klass.raw() != nullptr);
 
 	auto obj = klass.New();
@@ -79,8 +83,15 @@ TEST_CASE("Invoke member function with params test", "[invoke]")
 	ret = obj->invoke("StrCat", std::string("4"), std::string("2"));
 	REQUIRE(ret->to <std::string>() == "42");
 
-	//ret = obj->invoke("StructTest", TestStruct1{"a", 1, 2});	//SIGSEGV on mono 3.2.3
-	//REQUIRE(ret->to<std::string>() == "a12");
+	ret = obj->invoke("StructTest", TestStruct1{"a", 1, 2});	//SIGSEGV on mono 3.2.3
+	REQUIRE(ret->to<std::string>() == "a12");
+
+	auto paramClass = image.classFromName("TestLib", "Param");
+	auto param = paramClass.New();
+    param->setField("a", 1);
+    param->setField("b", 2);
+    ret = obj->invoke("Sum", param);
+    REQUIRE(ret->to<int>());
 
 	// TODO: add array params test
 	// TODO: delegate test

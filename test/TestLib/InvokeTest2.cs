@@ -2,6 +2,13 @@
 
 namespace TestLib
 {
+    public class Param
+    {
+        public int a;
+        public int b;
+    }
+
+
     public class InvokeTest2
     {
         public long CubicSum(long a, long b, long c)
@@ -27,6 +34,11 @@ namespace TestLib
         public string StructTest(TestStruct1 st)
         {
             return $"{st.s}{st.a}{st.b}";
+        }
+
+        public int Sum(Param param)
+        {
+            return param.a + param.b;
         }
     }
 }
