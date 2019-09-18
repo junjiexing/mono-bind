@@ -5,13 +5,13 @@
 
 namespace MonoBind
 {
-	ObjectPtr Method::invoke(MonoObject* obj, void** params, MonoObject** exec)
+	Object Method::invoke(MonoObject* obj, void** params, MonoObject** exec)
 	{
-		return Object::attachObject(mono_runtime_invoke(m_method.get(), obj, params, exec));;
+		return Object(mono_runtime_invoke(m_method.get(), obj, params, exec));;
 	}
 
 	template<typename ...ArgsT>
-	ObjectPtr Method::invoke(MonoObject* obj, ArgsT... args)
+	Object Method::invoke(MonoObject* obj, ArgsT... args)
 	{
 		void* monoArgs[] = { convertArg(args)... };
 		return invoke(obj, monoArgs);
@@ -52,9 +52,9 @@ namespace MonoBind
         return mono_string_new_utf16(mono_domain_get(), reinterpret_cast<const mono_unichar2*>(str.data()), str.size());
     }
 
-    MonoObject *Method::convertArg(ObjectPtr obj)
+    MonoObject *Method::convertArg(Object obj)
     {
-        return obj->raw();
+        return obj.raw();
     }
 
     template<typename T>

@@ -5,9 +5,11 @@
 
 namespace MonoBind
 {
-	ObjectPtr Class::New()
+	Object Class::New()
 	{
-		return Object::createObject(Domain::get().raw(), m_class);
+        auto object = mono_object_new(mono_domain_get(), m_class);
+        mono_runtime_object_init(object);
+		return Object(object);
 	}
 
 	Method Class::getMethod(const char* name)
@@ -23,7 +25,7 @@ namespace MonoBind
 	}
 
 	template<typename ...ArgsT>
-	ObjectPtr Class::invoke(const char* name, ArgsT const& ... args)
+	Object Class::invoke(const char* name, ArgsT const& ... args)
 	{
 		return getMethod(name).invoke(nullptr, args...);
 	}

@@ -8,6 +8,8 @@
 
 namespace MonoBind
 {
+    class Object;
+
 	class Method
 	{
 	public:
@@ -17,9 +19,9 @@ namespace MonoBind
 
 
 		template<typename ...ArgsT>
-		ObjectPtr invoke(MonoObject* obj, ArgsT ... args);
+		Object invoke(MonoObject* obj, ArgsT ... args);
 
-		inline ObjectPtr invoke(MonoObject* obj, void** params = nullptr, MonoObject** exec = nullptr);
+		inline Object invoke(MonoObject* obj, void** params = nullptr, MonoObject** exec = nullptr);
 
 		inline MonoMethod* raw() const;
 
@@ -36,7 +38,7 @@ namespace MonoBind
 
         inline static MonoString* convertArg(const std::wstring& str);
 
-        inline static MonoObject* convertArg(ObjectPtr obj);
+        inline static MonoObject* convertArg(Object obj);
 
         template <typename T>
         static T* convertArg(std::reference_wrapper<T> arg);

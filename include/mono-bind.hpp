@@ -8,10 +8,6 @@
 
 namespace MonoBind
 {
-	class Object;
-	using ObjectPtr = std::shared_ptr<Object>;
-
-
 	inline void initPath(const char* assembliesPath, const char* configFileName = nullptr)
 	{
 		mono_set_assemblies_path(assembliesPath);

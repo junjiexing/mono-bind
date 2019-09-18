@@ -1,22 +1,55 @@
 #pragma once
 
+#include "object.hpp"
+
 namespace MonoBind
 {
-	ObjectPtr Object::createObject(MonoDomain* domain, MonoClass* klass)
-	{
-		auto object = mono_object_new(domain, klass);
-		mono_runtime_object_init(object);
-		// TODO: invoke ctor
+    Object::Object(MonoObject *object)
+            :m_object(object),
+             m_gchandle(mono_gchandle_new(object, true))
+    {}
 
-		return ObjectPtr(new Object(object));
-	}
+    Object::Object(const Object &object)
+        :m_object(object.m_object),
+        m_gchandle(mono_gchandle_new(object.m_object, true))
+    {}
 
-	ObjectPtr Object::attachObject(MonoObject* object)
-	{
-		return ObjectPtr(new Object(object));
-	}
+    Object::Object(Object &&other) noexcept
+        :m_object(other.m_object),
+        m_gchandle(other.m_gchandle)
+    {
+        other.m_object = nullptr;
+        other.m_gchandle = 0;
+    }
 
-	MonoObject* Object::raw() const
+    Object &Object::operator=(const Object &other)
+    {
+        if (m_gchandle != 0)  mono_gchandle_free(m_gchandle);
+
+        m_object = other.m_object;
+        m_gchandle = mono_gchandle_new(m_object, true);
+
+        return *this;
+    }
+
+    Object &Object::operator=(Object &&other) noexcept
+    {
+        if (m_gchandle != 0)  mono_gchandle_free(m_gchandle);
+
+        m_object = other.m_object;
+        other.m_object = nullptr;
+        m_gchandle = other.m_gchandle;
+        other.m_gchandle = 0;
+
+        return *this;
+    }
+
+    Object::~Object()
+    {
+        if (m_gchandle != 0)  mono_gchandle_free(m_gchandle);
+    }
+
+    MonoObject* Object::raw() const
 	{
 		return m_object;
 	}
@@ -32,7 +65,7 @@ namespace MonoBind
 	}
 
 	template<typename ...ArgsT>
-	ObjectPtr Object::invoke(const char* name, ArgsT const&... args)
+	Object Object::invoke(const char* name, ArgsT const&... args)
 	{
 		Class klass(getClass());
 		auto method = klass.getMethod(name);
@@ -58,7 +91,7 @@ namespace MonoBind
 	template<typename T>
 	typename std::enable_if<
 	        !std::is_same<T, std::string>::value
-	        && !std::is_same<T, ObjectPtr>::value,
+	        && !std::is_same<T, Object>::value,
 	        T>::type  Object::getField(const char* name)
 	{
 		auto field = mono_class_get_field_from_name(getClass(), name);
@@ -77,12 +110,12 @@ namespace MonoBind
 	}
 
     template<typename T>
-    typename std::enable_if<std::is_same<T, ObjectPtr>::value, T>::type Object::getField(const char* name)
+    typename std::enable_if<std::is_same<T, Object>::value, T>::type Object::getField(const char* name)
     {
         auto field = mono_class_get_field_from_name(getClass(), name);
         MonoObject* mobj;
         mono_field_get_value(m_object, field, &mobj);
-        return Object::attachObject(mobj);
+        return Object(mobj);
     }
 
 	template<typename T>
@@ -93,21 +126,19 @@ namespace MonoBind
 	}
 
 	template<typename T>
-    typename std::enable_if<!std::is_same<T, ObjectPtr>::value, T>::type Object::getProp(const char* name)
+    typename std::enable_if<!std::is_same<T, Object>::value, T>::type Object::getProp(const char* name)
 	{
 		auto prop = mono_class_get_property_from_name(getClass(), name);
-		auto obj = Object::attachObject(mono_property_get_value(prop, m_object, nullptr, nullptr));
 		//TODO: exception
-		return obj->to<T>();
+		return Object(mono_property_get_value(prop, m_object, nullptr, nullptr)).to<T>();
 	}
 
     template<typename T>
-    typename std::enable_if<std::is_same<T, ObjectPtr>::value, T>::type Object::getProp(const char* name)
+    typename std::enable_if<std::is_same<T, Object>::value, T>::type Object::getProp(const char* name)
     {
         auto prop = mono_class_get_property_from_name(getClass(), name);
-        auto obj = Object::attachObject(mono_property_get_value(prop, m_object, nullptr, nullptr));
         //TODO: exception
-        return obj;
+        return Object(mono_property_get_value(prop, m_object, nullptr, nullptr));
     }
 
 
@@ -119,4 +150,7 @@ namespace MonoBind
 		mono_property_set_value(prop, m_object, params, nullptr);
 		//TODO: exception
 	}
+
+
+
 }
