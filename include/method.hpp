@@ -13,9 +13,7 @@ namespace MonoBind
 	class Method
 	{
 	public:
-		Method(MonoMethod* method)
-			:m_method(method, [](MonoMethod* m) {mono_free_method(m); })
-		{}
+		inline Method(MonoMethod* method);
 
 
 		template<typename ...ArgsT>
@@ -44,7 +42,7 @@ namespace MonoBind
         static T* convertArg(std::reference_wrapper<T> arg);
 
         template <typename T>
-        static MonoArray* convertArg(Array<T>& arg);
+        static MonoArray* convertArg(ArrayWrapper<T>& arg);
 
         template<typename T>
 		static T* convertArg(T& arg);

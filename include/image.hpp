@@ -1,16 +1,11 @@
 #pragma once
 
-#include <mono/metadata/appdomain.h>
-#include <mono/metadata/class.h>
-
 namespace MonoBind
 {
 	class Image
 	{
 	public:
-		explicit Image(MonoImage* image)
-			:m_image(image)
-		{}
+		inline Image(MonoImage* image);
 
         inline Class classFromName(const char* nameSpace, const char* name);
 

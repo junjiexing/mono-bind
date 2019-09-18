@@ -1,11 +1,14 @@
 #pragma once
 
-
-#include "class.hpp"
-
 namespace MonoBind
 {
-	Object Class::New()
+    Class::Class(MonoClass *klass)
+        :m_class(klass)
+    {}
+
+    MonoClass *Class::raw() const { return m_class; }
+
+    Object Class::New()
 	{
         auto object = mono_object_new(mono_domain_get(), m_class);
         mono_runtime_object_init(object);
@@ -24,6 +27,7 @@ namespace MonoBind
 		return Method(nullptr);
 	}
 
+	// invoke static member function
 	template<typename ...ArgsT>
 	Object Class::invoke(const char* name, ArgsT const& ... args)
 	{

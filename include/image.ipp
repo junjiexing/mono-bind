@@ -1,9 +1,10 @@
 #pragma once
 
-#include "image.hpp"
-
 namespace MonoBind
 {
+    Image::Image(MonoImage *image)
+        :m_image(image)
+    {}
 
 	Class Image::classFromName(const char* nameSpace, const char* name)
 	{

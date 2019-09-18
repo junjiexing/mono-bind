@@ -1,10 +1,11 @@
 #pragma once
 
-
-#include "method.hpp"
-
 namespace MonoBind
 {
+    Method::Method(MonoMethod *method)
+            :m_method(method, [](MonoMethod* m) {mono_free_method(m); })
+    {}
+
 	Object Method::invoke(MonoObject* obj, void** params, MonoObject** exec)
 	{
 		return Object(mono_runtime_invoke(m_method.get(), obj, params, exec));;
@@ -76,7 +77,7 @@ namespace MonoBind
     }
 
     template<typename T>
-    MonoArray *Method::convertArg(Array<T>& arg)
+    MonoArray *Method::convertArg(ArrayWrapper<T>& arg)
     {
         return arg.raw();
     }

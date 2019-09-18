@@ -1,9 +1,5 @@
 #pragma once
 
-#include <mono/metadata/appdomain.h>
-#include <mono/jit/jit.h>
-
-
 namespace MonoBind
 {
 	class Domain

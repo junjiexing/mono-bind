@@ -1,10 +1,5 @@
 #pragma once
 
-#include <mono/metadata/object.h>
-#include <wchar.h>
-#include <string>
-#include <type_traits>
-
 namespace MonoBind
 {
 	class Object

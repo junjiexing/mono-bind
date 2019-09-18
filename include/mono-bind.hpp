@@ -3,8 +3,20 @@
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/mono-config.h>
 #include <mono/metadata/loader.h>
+#include <mono/metadata/object.h>
+#include <mono/metadata/appdomain.h>
+#include <mono/metadata/class.h>
+#include <mono/metadata/metadata.h>
+#include <mono/metadata/debug-helpers.h>
+#include <mono/jit/jit.h>
 
+#include <cstring>
+#include <cwchar>
+#include <cassert>
+#include <string>
+#include <type_traits>
 #include <memory>
+
 
 namespace MonoBind
 {
@@ -34,7 +46,7 @@ namespace MonoBind
 #include <image.hpp>
 #include <assembly.hpp>
 #include <domain.hpp>
-#include <string_wrapper.hpp>
+#include <string.hpp>
 
 #include <array.ipp>
 #include <method.ipp>
@@ -44,4 +56,4 @@ namespace MonoBind
 #include <assembly.ipp>
 #include <domain.ipp>
 #include <type.ipp>
-
+#include <string.ipp>

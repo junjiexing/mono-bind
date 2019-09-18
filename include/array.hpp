@@ -1,26 +1,19 @@
 #pragma once
 
-#include <mono/metadata/object.h>
-#include <mono/metadata/appdomain.h>
-
 namespace MonoBind
 {
     class Class;
 
     template<typename T>
-    class Array
+    class ArrayWrapper
     {
     public:
-        Array();
-
-        Array(const Class& klass, uintptr_t n);
-        //TODO: std::initializer_list
-        //TODO: support range for
+        ArrayWrapper();
+        ArrayWrapper(const Class& klass, uintptr_t n);
 
         MonoArray* raw() const;
 
         uintptr_t length() const;
-
 
         const T* data() const;
         T* data();

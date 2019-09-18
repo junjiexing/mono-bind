@@ -1,19 +1,13 @@
 #pragma once
 
-#include <mono/metadata/class.h>
-#include <cstring>
-
-
 namespace MonoBind
 {
 	class Class
 	{
 	public:
-		explicit Class(MonoClass* klass)
-			:m_class(klass)
-		{}
+		inline Class(MonoClass* klass);
 
-		MonoClass* raw() const { return m_class; };
+		inline MonoClass* raw() const;
 
         inline Object New();
 

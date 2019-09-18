@@ -93,7 +93,7 @@ TEST_CASE("Invoke member function with params test", "[invoke]")
     ret = obj.invoke("Sum", param);
     REQUIRE(ret.to<int>());
 
-    MonoBind::Array<int> arr(MonoBind::Class::int32Class(), 10);
+    MonoBind::ArrayWrapper<int> arr(MonoBind::Class::int32Class(), 10);
     for (int i = 0; i < arr.length(); ++i)
     {
         arr[i] = i;
@@ -101,12 +101,9 @@ TEST_CASE("Invoke member function with params test", "[invoke]")
 
     ret = obj.invoke("SumArray", arr);
     REQUIRE(ret.to<int>() == 45);
-
-	// TODO: add array params test
-	// TODO: delegate test
+    // TODO: delegate test
 }
 
-// TODO: static method invoke test
 // TODO: exception test
 
 TEST_CASE("Getter and Setter test", "[Object]")
