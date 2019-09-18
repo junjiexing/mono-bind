@@ -13,6 +13,8 @@ namespace MonoBind
 		{}
 
         inline Class classFromName(const char* nameSpace, const char* name);
+
+		inline static Image& getCorlib();
 	private:
 		MonoImage* m_image;
 	};

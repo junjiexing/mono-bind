@@ -93,7 +93,7 @@ TEST_CASE("Invoke member function with params test", "[invoke]")
     ret = obj->invoke("Sum", param);
     REQUIRE(ret->to<int>());
 
-    MonoBind::Array<int> arr(MonoBind::Class::intClass(), 10);
+    MonoBind::Array<int> arr(MonoBind::Class::int32Class(), 10);
     for (int i = 0; i < arr.length(); ++i)
     {
         arr[i] = i;
