@@ -10,7 +10,7 @@ int main()
 	MonoBind::Domain::get().initJit("HelloHost.exe");
 	auto klass = MonoBind::Domain::get().openAssembly("Hello.dll").getImage().classFromName("Example", "Hello");
 	auto obj = klass.New();
-	obj->invoke("SayHello", "libmono");
+	obj.invoke("SayHello", "libmono");
 
 	return 0;
 }
