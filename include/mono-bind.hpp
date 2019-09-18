@@ -38,22 +38,22 @@ namespace MonoBind
 	}
 }
 
-#include <array.hpp>
-#include <method.hpp>
-#include <type.hpp>
-#include <object.hpp>
-#include <class.hpp>
-#include <image.hpp>
-#include <assembly.hpp>
-#include <domain.hpp>
-#include <string.hpp>
+#include <mono-bind/array.hpp>
+#include <mono-bind/method.hpp>
+#include <mono-bind/type.hpp>
+#include <mono-bind/object.hpp>
+#include <mono-bind/class.hpp>
+#include <mono-bind/image.hpp>
+#include <mono-bind/assembly.hpp>
+#include <mono-bind/domain.hpp>
+#include <mono-bind/string.hpp>
 
-#include <array.ipp>
-#include <method.ipp>
-#include <object.ipp>
-#include <class.ipp>
-#include <image.ipp>
-#include <assembly.ipp>
-#include <domain.ipp>
-#include <type.ipp>
-#include <string.ipp>
+#include <mono-bind/details/array.ipp>
+#include <mono-bind/details/method.ipp>
+#include <mono-bind/details/object.ipp>
+#include <mono-bind/details/class.ipp>
+#include <mono-bind/details/image.ipp>
+#include <mono-bind/details/assembly.ipp>
+#include <mono-bind/details/domain.ipp>
+#include <mono-bind/details/type.ipp>
+#include <mono-bind/details/string.ipp>
