@@ -11,7 +11,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>MONO_VERSION=3002003;MONO_PATH_STR=R"_($(MONO_PATH))_"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MONO_VERSION=3002003;MONO_PATH_STR=R"_($(MONO_PATH))_";MONO_DOMAIN_SET_CONFIG_PATCH</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(MONO_PATH)\include\mono-2.0;$(SolutionDir)include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
